@@ -24,13 +24,25 @@ tags: [rocm, vllm, docker, amd-igpu, benchmark]
 | เครื่อง | มินิพีซี AMD (Strix Point) |
 | CPU | AMD Ryzen AI 9 HX 370 (12 cores, 1 socket) |
 | iGPU | AMD Radeon 890M — `gfx1150` |
-| RAM | 60 GB, DDR5-5600 SO-DIMM (dual channel) |
+| RAM | 64 GB DDR5-5600 SO-DIMM (dual channel) — OS มองเห็น 60 GiB |
 | VRAM ที่ BIOS จองให้ | 512 MB (536,870,912 B) |
 | GTT | 44 GiB (47,244,640,256 B) ตั้งด้วย `amd-ttm --set 44` |
 | OS | Ubuntu Server 26.04.1 LTS |
 | Kernel | 7.0.0-31-generic |
 | Docker | 29.8.0 (build 88096ef) จาก official repo |
 | โมเดลที่ใช้ทดสอบ | `Qwen/Qwen2.5-3B-Instruct` (BF16 ตามที่ Hugging Face ให้มา ไม่ได้ quantize) |
+
+เรื่องตัวเลข RAM: เครื่องใส่มา 64 GB แต่ `free -g` รายงาน 60 ส่วนต่างไม่ได้หายไปไหน
+มันถูกกันไว้ก่อนที่ OS จะได้ใช้ ก้อนใหญ่สุดคือ `crashkernel` ที่อยู่ใน `/proc/cmdline`
+
+```
+crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+```
+
+เครื่อง 64 GB เข้าช่วง `64G-128G` จึงโดนกันไป 2 GiB สำหรับ kdump บวกกับ VRAM ที่ BIOS
+แบ่งให้ iGPU อีก 512 MiB และส่วนที่ firmware/ACPI จองไว้ ตัวเลขที่เหลือถึงกลายเป็น 60
+(`free -g` ปัดเศษลงด้วย) ตรงนี้ไม่กระทบการคำนวณ bandwidth ในโพสต์นี้ เพราะความจุกับ
+ความเร็วในการอ่านเป็นคนละเรื่องกัน
 
 เรื่อง GTT มีจุดที่ควรบอกไว้: `amd-ttm` อยู่ที่ `~/.local/bin/amd-ttm` ไม่ได้ติดตั้งมาจาก apt
 (`dpkg -S` หาไม่เจอ) และใน `/proc/cmdline` ไม่มี `ttm.pages_limit` อยู่เลย แปลว่า GTT ถูกขยาย

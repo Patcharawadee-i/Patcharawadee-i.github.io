@@ -24,13 +24,26 @@ override. The fix is to switch to the image AMD actually builds gfx1150 kernels 
 | Machine | AMD mini PC (Strix Point) |
 | CPU | AMD Ryzen AI 9 HX 370 (12 cores, 1 socket) |
 | iGPU | AMD Radeon 890M — `gfx1150` |
-| RAM | 60 GB, DDR5-5600 SO-DIMM (dual channel) |
+| RAM | 64 GB DDR5-5600 SO-DIMM (dual channel) — 60 GiB visible to the OS |
 | VRAM carved out by BIOS | 512 MB (536,870,912 B) |
 | GTT | 44 GiB (47,244,640,256 B), set with `amd-ttm --set 44` |
 | OS | Ubuntu Server 26.04.1 LTS |
 | Kernel | 7.0.0-31-generic |
 | Docker | 29.8.0 (build 88096ef) from the official repo |
 | Test model | `Qwen/Qwen2.5-3B-Instruct` (BF16 as published on Hugging Face, not quantized) |
+
+About that RAM figure: the machine has 64 GB installed but `free -g` reports 60. The
+difference is not missing, it is reserved before the OS ever sees it. The largest single
+piece is `crashkernel`, visible in `/proc/cmdline`:
+
+```
+crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+```
+
+A 64 GB machine falls in the `64G-128G` bracket, so 2 GiB goes to kdump. Add the 512 MiB
+the BIOS carves out for the iGPU plus the firmware and ACPI reservations, and what is left
+rounds down to 60 (`free -g` truncates). None of this affects the bandwidth arithmetic in
+this post — capacity and read speed are unrelated.
 
 One detail worth recording about GTT: `amd-ttm` lives at `~/.local/bin/amd-ttm` and was
 not installed from apt (`dpkg -S` finds nothing), and there is no `ttm.pages_limit` in
