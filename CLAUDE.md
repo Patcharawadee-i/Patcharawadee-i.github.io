@@ -28,7 +28,12 @@ slug: <shared-slug>
 title: ...
 date: ...
 description: ...
+tags: [...]
 ```
+
+Tags are always lowercase English, identical in both language versions, so a
+future tag index can group the pair as one topic. They are collected now but
+not rendered anywhere yet.
 
 A language toggle in the page header links to the same slug in the other language.
 If the counterpart file does not exist yet, the toggle is disabled rather than

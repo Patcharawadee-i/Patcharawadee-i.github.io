@@ -5,6 +5,7 @@ slug: vllm-rocm-gfx1150-wrong-version
 title: "vLLM บน Radeon 890M ช้า 10 เท่า เพราะ ROCm ผิดเวอร์ชัน"
 date: 2026-09-09
 description: "รัน vLLM บน iGPU Strix Point (gfx1150) แล้วได้ 1.17 tok/s ไล่หาสาเหตุจนเจอว่าปัญหาไม่ใช่ฮาร์ดแวร์ แต่เป็น HSA_OVERRIDE_GFX_VERSION ที่ไม่ควรมีตั้งแต่แรก"
+tags: [rocm, vllm, docker, amd-igpu, benchmark]
 ---
 
 ## TL;DR
