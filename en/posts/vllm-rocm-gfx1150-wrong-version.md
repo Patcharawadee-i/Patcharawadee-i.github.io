@@ -3,7 +3,7 @@ layout: post
 lang: en
 slug: vllm-rocm-gfx1150-wrong-version
 title: "vLLM on a Radeon 890M was 10x slower because of the wrong ROCm version"
-date: 2026-09-09
+date: 2026-09-09 20:00:00 +0700
 description: "Running vLLM on a Strix Point iGPU (gfx1150) gave me 1.17 tok/s. The bottleneck turned out not to be the hardware, but an HSA_OVERRIDE_GFX_VERSION that should never have been there."
 tags: [rocm, vllm, docker, amd-igpu, benchmark]
 ---
@@ -40,10 +40,16 @@ piece is `crashkernel`, visible in `/proc/cmdline`:
 crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
 ```
 
-A 64 GB machine falls in the `64G-128G` bracket, so 2 GiB goes to kdump. Add the 512 MiB
-the BIOS carves out for the iGPU plus the firmware and ACPI reservations, and what is left
-rounds down to 60 (`free -g` truncates). None of this affects the bandwidth arithmetic in
-this post — capacity and read speed are unrelated.
+Do not guess the reservation from that table — ask the kernel. `/sys/kernel/kexec_crash_size`
+reports `1073741824`, so **1 GiB**, not the 2 GiB the `64G-128G` bracket suggests: by the
+time the kernel picks a bracket it sees the RAM left after the firmware carve-outs, which
+is under 64 GiB, so it lands in `32G-64G` instead. Add the 512 MiB the BIOS gives the iGPU
+plus roughly 1.6 GiB of firmware and ACPI reservations, and `MemTotal` comes out at
+60.92 GiB, which `free -g` truncates to 60.
+
+The full accounting is in the [dual boot post]({{ '/en/posts/ubuntu-server-dual-boot-windows-11-unallocated-space/' | relative_url }}),
+which is the work that came before this one. None of it affects the bandwidth arithmetic
+here — capacity and read speed are unrelated.
 
 One detail worth recording about GTT: `amd-ttm` lives at `~/.local/bin/amd-ttm` and was
 not installed from apt (`dpkg -S` finds nothing), and there is no `ttm.pages_limit` in

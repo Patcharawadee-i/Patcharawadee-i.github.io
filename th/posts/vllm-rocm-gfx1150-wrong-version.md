@@ -3,7 +3,7 @@ layout: post
 lang: th
 slug: vllm-rocm-gfx1150-wrong-version
 title: "vLLM บน Radeon 890M ช้า 10 เท่า เพราะ ROCm ผิดเวอร์ชัน"
-date: 2026-09-09
+date: 2026-09-09 20:00:00 +0700
 description: "รัน vLLM บน iGPU Strix Point (gfx1150) แล้วได้ 1.17 tok/s ไล่หาสาเหตุจนเจอว่าปัญหาไม่ใช่ฮาร์ดแวร์ แต่เป็น HSA_OVERRIDE_GFX_VERSION ที่ไม่ควรมีตั้งแต่แรก"
 tags: [rocm, vllm, docker, amd-igpu, benchmark]
 ---
@@ -39,9 +39,14 @@ tags: [rocm, vllm, docker, amd-igpu, benchmark]
 crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
 ```
 
-เครื่อง 64 GB เข้าช่วง `64G-128G` จึงโดนกันไป 2 GiB สำหรับ kdump บวกกับ VRAM ที่ BIOS
-แบ่งให้ iGPU อีก 512 MiB และส่วนที่ firmware/ACPI จองไว้ ตัวเลขที่เหลือถึงกลายเป็น 60
-(`free -g` ปัดเศษลงด้วย) ตรงนี้ไม่กระทบการคำนวณ bandwidth ในโพสต์นี้ เพราะความจุกับ
+ตัวเลขที่ kernel จองจริงอ่านได้จาก `/sys/kernel/kexec_crash_size` ซึ่งได้ `1073741824`
+คือ **1 GiB** (ไม่ใช่ 2 GiB ตามช่อง `64G-128G` เพราะตอนตัดสินใจ kernel เห็น RAM ที่
+firmware แบ่งไปแล้ว ซึ่งต่ำกว่า 64 GiB จึงตกไปอยู่ช่วง `32G-64G`) บวก VRAM ที่ BIOS
+แบ่งให้ iGPU อีก 512 MiB และส่วนที่ firmware/ACPI จองไว้อีกราว 1.6 GiB เหลือ `MemTotal`
+60.92 GiB ซึ่ง `free -g` ปัดลงเป็น 60
+
+รายละเอียดการไล่ตัวเลขนี้อยู่ใน[โพสต์เรื่องลง dual boot]({{ '/th/posts/ubuntu-server-dual-boot-windows-11-unallocated-space/' | relative_url }})
+ซึ่งเป็นงานที่ทำก่อนหน้านี้ ตรงนี้ไม่กระทบการคำนวณ bandwidth ในโพสต์นี้ เพราะความจุกับ
 ความเร็วในการอ่านเป็นคนละเรื่องกัน
 
 เรื่อง GTT มีจุดที่ควรบอกไว้: `amd-ttm` อยู่ที่ `~/.local/bin/amd-ttm` ไม่ได้ติดตั้งมาจาก apt
