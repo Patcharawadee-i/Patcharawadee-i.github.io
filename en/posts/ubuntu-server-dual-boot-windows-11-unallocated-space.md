@@ -162,10 +162,9 @@ In this order. Do not skip any of it.
    This machine runs Windows 11 Pro, which also has the full BitLocker panel at
    Control Panel → BitLocker Drive Encryption, but the Settings toggle above was enough,
    so I never opened it.
-3. **Save your BitLocker recovery key** — how, in the next section
-4. **Shrink the volume** in Disk Management to free space for Ubuntu
+3. **Shrink the volume** in Disk Management to free space for Ubuntu
    (this machine keeps 128 GB for Windows and gives the rest to Ubuntu)
-5. **Turn that free space into a real drive** — right-click the unallocated space →
+4. **Turn that free space into a real drive** — right-click the unallocated space →
    New Simple Volume → make it D:. **Do not leave it as bare unallocated space.**
    The reason is in the section below.
 
@@ -174,33 +173,20 @@ In this order. Do not skip any of it.
 > locked. If Linux writes to them in that state, the Windows filesystem can be corrupted.
 {: .warn}
 
-## What a recovery key is and why you save it first
+## Checking that Device Encryption is really off
 
-BitLocker encrypts what is on the disk and unlocks it automatically as long as the boot
-environment looks the way it expects. When it sees a change it did not anticipate, it does
-not unlock. It shows a blue screen asking for a 48-digit recovery key instead.
-
-Things that trigger it include changing BIOS settings, changing the bootloader, and
-updating firmware.
-
-Dual booting does all three.
-
-If you do not have the key in hand at that moment, you are locked out of Windows for good
-and the data inside is gone permanently. There is no other way in — that is the entire
-point of disk encryption.
-
-Get the key by opening Command Prompt as administrator and running:
+Flipping the switch in Settings is not the end of it — decryption still has to finish. To
+see whether it has, open Command Prompt as administrator and ask the drive what protectors
+it still has:
 
 ```
 manage-bde -protectors -get C:
 ```
 
-Look for the `Numerical Password` line; the 48 digits under it are the recovery key. Store
-it off the machine — photograph it, write it on paper, put it in your phone. Do not leave
-it on the computer whose partitions you are about to rearrange.
-
-This machine was never asked for the key at any point. That was luck, not a reason to skip
-the step.
+On this machine, after Device Encryption was turned off, the command returns no protectors
+at all: no `Numerical Password` line, and no 48-digit number to write down, because a drive
+that is not encrypted has no key to begin with. Checking the status of C: separately agreed
+with that — it is not BitLocker-encrypted any more.
 
 ## Making the USB installer
 
@@ -222,11 +208,8 @@ not that free space**, so there is nothing to install onto.
 I asked one AI tool about it. It said to turn off Device Encryption / BitLocker in Windows
 Settings. Did that — **still no.**
 
-I asked a different one, which added two more things:
-
-1. After shrinking, do not leave the space unallocated; create it as a real drive in
-   Windows first (D:)
-2. Save the BitLocker recovery key before doing anything else
+I asked a different one, which supplied the missing piece: after shrinking, do not leave
+the space unallocated; create it as a real drive in Windows first (D:).
 
 Once it was a D: drive the installer could see it — but that drive was BitLocker-encrypted
 and still unusable. Removing the encryption from it was the last piece; after that it could
@@ -240,12 +223,11 @@ Both conditions are required. Neither one alone does it:
 | a real drive, but still BitLocker-encrypted | installer sees it, cannot use it |
 | a real drive with no BitLocker | selectable, installs fine |
 
-> ⚠️ **The limits of what I verified.** What this machine confirms is that **the partition
-> you hand to Ubuntu must not be BitLocker-encrypted**, and that turning off Device
-> Encryption in Settings made that true. I did not check whether C: was decrypted along
-> with it. So do not read this post as "turn off BitLocker everywhere and it works" — what
-> is confirmed to be necessary is that the target partition is not encrypted. The state of
-> C: remains an unknown here.
+> ⚠️ **The Settings shortcut decrypts the whole machine, not just the target drive.** What
+> is actually required is that **the partition you hand to Ubuntu is not BitLocker-encrypted**,
+> but the Device encryption switch in Settings is not per-drive. Checked afterwards, C: is
+> not encrypted either. If you want C: to stay encrypted, work drive by drive in
+> Control Panel → BitLocker Drive Encryption instead of using this shortcut.
 {: .warn}
 
 ## In the installer
@@ -297,9 +279,9 @@ SecureBoot enabled
 
 Ubuntu ships signed boot files, so it boots under Secure Boot directly.
 
-Leaving it alone buys more than a skipped step: changing that setting in the BIOS is
-exactly the kind of "the boot environment changed" event that makes BitLocker demand a
-recovery key. Not touching it means not taking that risk.
+Leaving it alone buys more than a skipped step: every BIOS setting you change is one more
+variable to walk back when something does not boot. If it installs with Secure Boot on,
+there is no reason to turn it off.
 
 ## What I learned
 
@@ -309,7 +291,6 @@ recovery key. Not touching it means not taking that risk.
 | target drive still BitLocker-encrypted | installer sees the drive but cannot use it | turn off Device Encryption and let decryption finish |
 | Fast Startup left on | Windows never really shuts down, partitions stay locked, filesystem corruption risk | turn it off before anything else |
 | creating a new EFI partition for Ubuntu | Windows may stop booting | reuse the ESP Windows already uses |
-| not saving the recovery key | if BitLocker ever asks, the Windows data is gone permanently | `manage-bde -protectors -get C:` and keep the 48 digits off the machine |
 | not installing OpenSSH during setup | you need a monitor and keyboard to continue | tick it on the software selection screen |
 | skipping boot priority / AC Power Loss | machine does not return after an outage, or returns into the wrong OS | set both in the BIOS while you are there |
 
