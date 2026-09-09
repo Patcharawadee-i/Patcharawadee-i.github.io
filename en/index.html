@@ -1,0 +1,31 @@
+---
+layout: default
+lang: en
+title: Building an AI Station
+description: "Notes from building a self-hosted AI station on an AMD mini PC — real problems, real commands, numbers I measured myself."
+---
+
+<div class="home wrap">
+  <h1 class="home__title">Building an AI Station</h1>
+  <p class="home__lede">
+    Notes from building a self-hosted AI station on an AMD mini PC (Strix Point iGPU, Ubuntu Server
+    + Windows 11 dual boot). Written for people who hit the same problem and found nothing useful.
+    The dead ends and wrong assumptions are included on purpose — that is the part you cannot find
+    anywhere else.
+  </p>
+
+  {%- assign posts = site.pages | where: "lang", "en" | where_exp: "p", "p.slug" | sort: "date" | reverse -%}
+  <ul class="post-list">
+    {%- for post in posts -%}
+      <li>
+        <a class="card" href="{{ post.url | relative_url }}">
+          <span class="card__date">{{ post.date | date: "%Y-%m-%d" }}</span>
+          <h2 class="card__title">{{ post.title }}</h2>
+          <p class="card__desc">{{ post.description }}</p>
+        </a>
+      </li>
+    {%- else -%}
+      <li><p class="card__desc">No posts yet.</p></li>
+    {%- endfor -%}
+  </ul>
+</div>

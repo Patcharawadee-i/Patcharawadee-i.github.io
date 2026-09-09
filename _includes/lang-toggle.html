@@ -1,0 +1,31 @@
+{%- comment -%}
+ปุ่มสลับภาษา: หาไฟล์คู่แปลจาก slug เดียวกันในอีกภาษา
+ถ้ายังไม่มีคู่แปล ปุ่มจะเป็น disabled ไม่ลิงก์ไป 404
+{%- endcomment -%}
+
+{%- if page.lang == 'th' -%}
+  {%- assign other_lang = 'en' -%}
+{%- else -%}
+  {%- assign other_lang = 'th' -%}
+{%- endif -%}
+
+{%- if page.slug -%}
+  {%- assign counterpart = site.pages | where: "lang", other_lang | where: "slug", page.slug | first -%}
+{%- else -%}
+  {%- assign counterpart = nil -%}
+{%- endif -%}
+
+<div class="lang-toggle" role="group" aria-label="Language">
+  <span class="lang-toggle__current">{{ page.lang | upcase | default: 'TH' }}</span>
+  {%- if page.slug -%}
+    {%- if counterpart -%}
+      <a class="lang-toggle__link" href="{{ counterpart.url | relative_url }}" hreflang="{{ other_lang }}">{{ other_lang | upcase }}</a>
+    {%- else -%}
+      <span class="lang-toggle__link is-disabled"
+            aria-disabled="true"
+            title="{% if other_lang == 'en' %}English version not available yet{% else %}ยังไม่มีฉบับภาษาไทย{% endif %}">{{ other_lang | upcase }}</span>
+    {%- endif -%}
+  {%- else -%}
+    <a class="lang-toggle__link" href="{{ '/' | append: other_lang | append: '/' | relative_url }}" hreflang="{{ other_lang }}">{{ other_lang | upcase }}</a>
+  {%- endif -%}
+</div>

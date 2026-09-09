@@ -1,0 +1,39 @@
+title: AI Station Journey
+description: "บันทึกการสร้าง self-hosted AI station บนมินิพีซี AMD — ไทย/English"
+url: "https://Patcharawadee-i.github.io"
+baseurl: ""
+
+permalink: pretty
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+# ไฟล์ที่ไม่ต้องเอาขึ้นเว็บ (แต่ยัง commit ไว้ใน repo)
+exclude:
+  - CLAUDE.md
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .jekyll-cache
+
+# โพสต์อยู่เป็น page ธรรมดาใต้ /th/posts และ /en/posts ตามที่ CLAUDE.md กำหนด
+# defaults ตรงนี้ทำให้ไม่ต้องพิมพ์ layout/lang ซ้ำในทุกไฟล์ แต่โพสต์ยังประกาศ
+# lang เองได้ (และควรประกาศ เพราะเป็นข้อกำหนดใน CLAUDE.md)
+defaults:
+  - scope:
+      path: "th/posts"
+    values:
+      layout: post
+      lang: th
+  - scope:
+      path: "en/posts"
+    values:
+      layout: post
+      lang: en

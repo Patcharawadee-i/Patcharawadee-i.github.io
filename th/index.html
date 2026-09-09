@@ -1,0 +1,34 @@
+---
+layout: default
+lang: th
+title: บันทึกการสร้าง AI Station
+description: "บันทึกการสร้าง self-hosted AI station บนมินิพีซี AMD — ปัญหาจริง คำสั่งจริง ตัวเลขที่วัดเอง"
+---
+
+<div class="home wrap">
+  <h1 class="home__title">บันทึกการสร้าง AI Station</h1>
+  <p class="home__lede">
+    บันทึกการทำ self-hosted AI station บนมินิพีซี AMD (Strix Point iGPU, Ubuntu Server + Windows 11 dual boot)
+    เขียนไว้ให้คนที่เจอปัญหาเดียวกันแล้วหาข้อมูลไม่เจอ — มีทางตันและสมมติฐานที่ผิดรวมอยู่ด้วย
+    เพราะนั่นคือส่วนที่หาอ่านที่อื่นไม่ได้
+  </p>
+
+  {%- assign posts = site.pages | where: "lang", "th" | where_exp: "p", "p.slug" | sort: "date" | reverse -%}
+  <ul class="post-list">
+    {%- for post in posts -%}
+      {%- assign counterpart = site.pages | where: "lang", "en" | where: "slug", post.slug | first -%}
+      <li>
+        <a class="card" href="{{ post.url | relative_url }}">
+          <span class="card__date">{{ post.date | date: "%Y-%m-%d" }}</span>
+          <h2 class="card__title">{{ post.title }}</h2>
+          <p class="card__desc">{{ post.description }}</p>
+          {%- unless counterpart -%}
+            <span class="card__missing">ยังไม่มีฉบับภาษาอังกฤษ</span>
+          {%- endunless -%}
+        </a>
+      </li>
+    {%- else -%}
+      <li><p class="card__desc">ยังไม่มีโพสต์</p></li>
+    {%- endfor -%}
+  </ul>
+</div>

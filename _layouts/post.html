@@ -1,0 +1,78 @@
+---
+layout: default
+---
+<article class="post wrap">
+  <header class="post__header">
+    <p class="post__meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
+    </p>
+    <h1 class="post__title">{{ page.title }}</h1>
+    {% if page.description %}<p class="post__lede">{{ page.description }}</p>{% endif %}
+  </header>
+
+  <div class="post__body">
+    <aside class="toc" id="toc" hidden>
+      <p class="toc__label">{% if page.lang == 'th' %}สารบัญ{% else %}Contents{% endif %}</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="content" id="content">
+      {{ content }}
+    </div>
+  </div>
+</article>
+
+<script>
+// สร้างสารบัญจากหัวข้อ h2/h3 ในเนื้อหา ไม่ต้องพึ่ง plugin หรือไลบรารีข้างนอก
+(function () {
+  var content = document.getElementById('content');
+  var toc = document.getElementById('toc');
+  var nav = document.getElementById('toc-nav');
+  if (!content || !toc || !nav) return;
+
+  var heads = content.querySelectorAll('h2, h3');
+  if (heads.length < 3) return;
+
+  var used = {};
+  var list = document.createElement('ul');
+
+  Array.prototype.forEach.call(heads, function (h, i) {
+    if (!h.id) {
+      var base = (h.textContent || '').trim().toLowerCase()
+        .replace(/[^\wก-๙\s-]/g, '').replace(/\s+/g, '-') || ('section-' + i);
+      used[base] = (used[base] || 0) + 1;
+      h.id = used[base] > 1 ? base + '-' + used[base] : base;
+    }
+    var li = document.createElement('li');
+    li.className = 'toc__item toc__item--' + h.tagName.toLowerCase();
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    list.appendChild(li);
+  });
+
+  nav.appendChild(list);
+  toc.hidden = false;
+
+  // ไฮไลต์หัวข้อที่กำลังอ่านอยู่
+  if ('IntersectionObserver' in window) {
+    var links = {};
+    Array.prototype.forEach.call(nav.querySelectorAll('a'), function (a) {
+      links[a.getAttribute('href').slice(1)] = a;
+    });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var a = links[e.target.id];
+        if (a && e.isIntersecting) {
+          Array.prototype.forEach.call(nav.querySelectorAll('a'), function (x) {
+            x.classList.remove('is-active');
+          });
+          a.classList.add('is-active');
+        }
+      });
+    }, { rootMargin: '0px 0px -75% 0px' });
+    Array.prototype.forEach.call(heads, function (h) { obs.observe(h); });
+  }
+})();
+</script>
