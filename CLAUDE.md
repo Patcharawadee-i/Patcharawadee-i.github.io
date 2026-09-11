@@ -62,6 +62,10 @@ linking to a 404.
 - Include measured before/after numbers wherever a claim is made about performance.
 - Avoid a triumphant tone. Dead ends and wrong assumptions are the most valuable
   part of the post.
+- Show only what the reader needs to fix the problem. Trim command output to the
+  relevant lines and say so ("other lines trimmed"). Show the changed part of a
+  config file rather than the whole file when the rest is a tool's default. Leave
+  out inventories of what runs on the author's machine.
 
 # Post structure
 
@@ -83,6 +87,41 @@ Use warning callouts for mistakes that cause real damage or silent performance l
   `<your-ip>`, `<user>`, `<hostname>`.
 - Before any commit, grep the diff for these patterns and flag anything that looks
   like a real value.
+
+# Publication safety review
+
+Run this review before every commit and whenever asked to check posts. Review
+**every** post in `th/posts/` and `en/posts/`, not only new or changed files —
+a new post can expose something when read together with an old one.
+
+1. **No real secret values.** Client secrets, cookie secrets, tokens, passwords,
+   private keys, tunnel or ingress credentials. Git keeps them in history even
+   after the file is edited, so they must never be committed at all. If one is
+   found in history, stop and tell the user; do not try to fix it quietly.
+2. **No descriptions of the author's own security posture.** Neither weaknesses
+   (a service with no auth, a workload that can read secrets, a disk left
+   unencrypted, which ports are listening) nor the protections that exist
+   (where auth sits, which layers ask for a password, who may push to a
+   registry). The author leaves these out on purpose. Explaining how a public
+   tool behaves in general is fine; stating the state of this machine is not.
+   Check for inferences a reader could make by combining sentences, code, and
+   output across posts.
+3. **No internal commands or machine-specific paths.** Host paths under a home
+   directory or custom locations, and inventory output (service lists, unit
+   lists, installed software) beyond what the reader needs to fix their
+   problem. Standard paths (`/dev/...`, `/proc/...`, `/var/lib/kubelet/...`)
+   and paths inside a container are fine.
+
+Commit messages are public too: apply the same three rules to them.
+
+End commit messages with the `Co-Authored-By:` trailer only. Do not add a
+`Claude-Session:` trailer — it links to the conversation, which holds details
+of the author's system that are deliberately kept out of this repo.
+
+Report findings to the user with file and line, ranked by risk, and let them
+decide. Edit posts only after they choose, and apply the same change to both
+language versions. Never use real details of the author's system as examples
+in this file — it is public.
 
 # Build
 
