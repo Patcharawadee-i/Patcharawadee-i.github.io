@@ -207,6 +207,21 @@ a:hover { color: var(--purple); }
 }
 .highlight, .highlighter-rouge { margin: 0; }
 
+/* โค้ดยาวที่พับไว้ — ใช้ <details markdown="1"> ในไฟล์ markdown */
+.content details {
+  margin: 1.25rem 0;
+  padding: .7rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+}
+.content details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--blue);
+}
+.content details[open] > summary { margin-bottom: .75rem; }
+
 /* callout — ใช้ {: .warn} ต่อท้าย blockquote ในไฟล์ markdown */
 .content blockquote {
   margin-inline: 0;
