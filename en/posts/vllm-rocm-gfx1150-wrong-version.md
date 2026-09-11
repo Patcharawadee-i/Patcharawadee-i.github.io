@@ -51,9 +51,8 @@ The full accounting is in the [dual boot post]({{ '/en/posts/ubuntu-server-dual-
 which is the work that came before this one. None of it affects the bandwidth arithmetic
 here — capacity and read speed are unrelated.
 
-One detail worth recording about GTT: `amd-ttm` lives at `~/.local/bin/amd-ttm` and was
-not installed from apt (`dpkg -S` finds nothing), and there is no `ttm.pages_limit` in
-`/proc/cmdline`. So GTT is being resized at runtime, not through a kernel parameter.
+One detail worth recording about GTT: there is no `ttm.pages_limit` in `/proc/cmdline`,
+so GTT is being resized at runtime by `amd-ttm`, not through a kernel parameter.
 The 44 GiB I set matches the `44.0 GiB` figure that shows up in an error message later
 in this post.
 
@@ -376,9 +375,8 @@ several times and only use the numbers once they settle.
 
 ### Downloading the same model twice by accident
 
-While switching configurations back and forth I pointed the cache at two different places
-(`/srv/models` and `~/hf-cache`), so the same model got pulled to disk twice and wasted
-5.8 GB. Pick one cache directory up front and mount the same one every time.
+While switching configurations back and forth I pointed the cache at two different
+directories, so the same model got pulled to disk twice and wasted 5.8 GB. Pick one cache directory up front and mount the same one every time.
 
 ## Before / after
 

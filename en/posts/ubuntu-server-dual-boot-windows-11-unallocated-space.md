@@ -183,10 +183,9 @@ it still has:
 manage-bde -protectors -get C:
 ```
 
-On this machine, after Device Encryption was turned off, the command returns no protectors
-at all: no `Numerical Password` line, and no 48-digit number to write down, because a drive
-that is not encrypted has no key to begin with. Checking the status of C: separately agreed
-with that — it is not BitLocker-encrypted any more.
+Once decryption has finished, the command returns no protectors at all: no
+`Numerical Password` line, and no 48-digit number to write down, because a drive that is
+not encrypted has no key to begin with.
 
 ## Making the USB installer
 
@@ -225,8 +224,8 @@ Both conditions are required. Neither one alone does it:
 
 > ⚠️ **The Settings shortcut decrypts the whole machine, not just the target drive.** What
 > is actually required is that **the partition you hand to Ubuntu is not BitLocker-encrypted**,
-> but the Device encryption switch in Settings is not per-drive. Checked afterwards, C: is
-> not encrypted either. If you want C: to stay encrypted, work drive by drive in
+> but the Device encryption switch in Settings is not per-drive — turning it off decrypts
+> C: as well. If you want C: to stay encrypted, work drive by drive in
 > Control Panel → BitLocker Drive Encryption instead of using this shortcut.
 {: .warn}
 
