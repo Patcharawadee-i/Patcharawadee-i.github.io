@@ -4,7 +4,7 @@ lang: en
 slug: agent-skill-narrow-mcp-door
 series: agents
 title: "A sandboxed agent cannot curl your internal services: one narrow MCP door instead of a skill full of commands"
-date: 2026-09-28 10:00:00 +0700
+date: 2026-10-03 17:57:10 +0000
 description: "I wanted to tell my self-hosted agent to run a document pipeline. The agent's sandbox is built so that commands cannot reach internal services, so a skill made of curl commands starts nothing. What I built instead: a small internal MCP server with three tools and no generic one."
 tags: [ai-agents, hermes-agent, mcp, kubernetes, networkpolicy, windmill, sandbox]
 ---
@@ -220,8 +220,8 @@ and they say nothing about what the documents contain.
 
 ## Where this part ends
 
-The wiring worked: Hermes connected to the server over
-Streamable HTTP in 801 ms and found 3 tools.
+The connection worked: Hermes connected to the server over Streamable HTTP in 801 ms and
+found 3 tools.
 
 Then the model reported a run that never happened. That is the next post.
 

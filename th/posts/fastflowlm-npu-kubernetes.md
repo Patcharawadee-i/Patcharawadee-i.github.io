@@ -438,6 +438,14 @@ func (p *npuDevicePlugin) Allocate(ctx context.Context, r *pluginapi.AllocateReq
 เพราะไม่แตะฮาร์ดแวร์ ทั้งตัว plugin และ pod ของ FastFlowLM จึงรันด้วย `privileged: false` —
 ประเด็นเดียวกับโพสต์ที่แล้วที่บอกว่า `privileged: true` คือการปิดกำแพงทั้งหลังเพื่อเปิดประตูบานเดียว
 
+> ⚠️ **เพิ่มเมื่อ 2026-10-04: plugin ตัวนี้ไม่รอดเมื่อ kubelet restart** มันลงทะเบียนกับ kubelet
+> ครั้งเดียวตอนเริ่มทำงาน แล้วไม่ลงทะเบียนอีกเลย พอ kubelet restart ตัว plugin ยังขึ้นสถานะ
+> `Running` อยู่ แต่ทะเบียนหลุดไปแล้ว pod ตัวถัดไปที่ต้องใช้ NPU จะสตาร์ตไม่ขึ้นและติด
+> `CreateContainerConfigError` โค้ดข้างล่างคงไว้ตามที่รันจริงทุกบรรทัด ทางแก้ที่ต้นเหตุคือให้ plugin
+> ลงทะเบียนใหม่เมื่อ `kubelet.sock` ถูกสร้างขึ้นใหม่ ส่วนที่มาของปัญหาและทางเลือกอยู่ใน
+> [โพสต์ถัดมา]({{ '/th/posts/agent-reported-a-run-that-never-happened/' | relative_url }})
+{: .warn}
+
 <details markdown="1">
 <summary>โค้ด Go ฉบับเต็ม (~140 บรรทัด)</summary>
 

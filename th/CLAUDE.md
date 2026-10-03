@@ -16,8 +16,20 @@ replace it.
 
 ## Write Thai, not translated English
 
+The Thai version must read smoothly, as if it had been written in Thai first.
+The author has asked for this explicitly: smooth Thai matters more than staying
+close to the English sentence.
+
 A sentence that keeps English word order and English metaphors is unreadable in
 Thai even when every word is correct.
+
+- English figures of speech do not survive translation. Say what they mean:
+  - not `คำสั่งใน skill เป็นแค่มารยาท` but `ข้อความใน skill เป็นเพียงคำแนะนำ agent จะไม่ทำตามก็ได้`
+  - not `การเดินสายใช้งานได้` but `การเชื่อมต่อใช้งานได้`
+  - not `โมเดลทำตัวดี แล้วก็ถูก kill` but `โมเดลรายงานตรงตามจริง แต่ pod ถูก kill เพราะ memory ไม่พอ`
+- Headings state the topic plainly. A reader skimming the table of contents
+  should know what each section is about.
+- When a paragraph explains an event, tell it in the order it happened.
 
 - Break a long English sentence into two or three short Thai ones.
 - Say the plain thing. Not `รายงานช่างคุยที่ยกสิ่งที่อ่านมาใส่ จะพาเนื้อหาเอกสารไปอยู่ครบทั้งสามที่`

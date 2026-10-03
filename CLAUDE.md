@@ -78,6 +78,24 @@ Each post follows this order:
 
 Use warning callouts for mistakes that cause real damage or silent performance loss.
 
+# Published posts are a record
+
+A post records what was true on the day it was written. That is what makes this
+a blog and not a manual.
+
+- Do not "correct" a sentence in a published post because it later stopped
+  being true. A statement like "nothing here uses X yet" stays, even after a
+  later post uses X. Do not report such sentences as problems either.
+- Never change a published post without the author knowing. Before any edit to
+  one, ask: name the file, quote the exact sentence, say what it would become
+  and why, then wait for the answer. This covers small wording changes too.
+- When something learned later affects an old post (a bug found in published
+  code, a conclusion that turned out wrong), ask first. If the author agrees,
+  add a dated note such as "Added YYYY-MM-DD: ..." that links to the newer
+  post. Leave the original prose and code exactly as they were.
+- Publication-safety edits and language-rule fixes are also changes to a
+  published post. They follow the same rule: ask first, edit after.
+
 # Hard rules
 
 - Never fabricate commands, output, version numbers, or benchmark results. If
