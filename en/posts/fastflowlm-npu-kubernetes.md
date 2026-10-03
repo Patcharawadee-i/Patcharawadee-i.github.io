@@ -452,7 +452,7 @@ Because it never touches the hardware, both the plugin and the FastFlowLM pod ru
 `privileged: false` — the same point as the last post: `privileged: true` tears down the whole
 wall to open one door.
 
-> ⚠️ **Added 2026-10-04: this plugin does not survive a kubelet restart.** It registers with
+> ⚠️ **Added 2026-10-03: this plugin does not survive a kubelet restart.** It registers with
 > kubelet once, at startup, and never again. When kubelet restarts, the plugin stays
 > `Running` but is no longer registered, and the next pod that needs the NPU fails to start
 > with `CreateContainerConfigError`. The code below is left exactly as it ran. The real fix
