@@ -17,6 +17,7 @@ kramdown:
 # ไฟล์ที่ไม่ต้องเอาขึ้นเว็บ (แต่ยัง commit ไว้ใน repo)
 exclude:
   - CLAUDE.md
+  - th/CLAUDE.md
   - README.md
   - Gemfile
   - Gemfile.lock

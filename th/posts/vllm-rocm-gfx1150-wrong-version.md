@@ -284,7 +284,7 @@ services:
       - seccomp=unconfined
       - label=disable
     # ต้องใช้ GID เป็นตัวเลข ไม่ใช่ชื่อกลุ่ม — ดูหัวข้อ "unable to find group render"
-    # ด้านล่าง ตัวเลขนี้เป็นของเครื่องผม ให้เช็คของตัวเองด้วย:
+    # ด้านล่าง ตัวเลขนี้เป็นของเครื่องนี้ ให้เช็คของตัวเองด้วย:
     #   getent group render video
     group_add:
       - "44"    # video   (getent group video)
