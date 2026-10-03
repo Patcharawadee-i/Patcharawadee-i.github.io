@@ -245,10 +245,10 @@ At the storage screen:
 > stops booting.
 {: .warn}
 
-One more thing worth ticking on the software selection screen: **OpenSSH Server**. Install
-it now and you can do the rest of the work remotely instead of sitting in front of the
-machine with a monitor and keyboard attached — which, for a machine meant to be a server,
-is how you were going to use it anyway.
+One more thing on the software selection screen: if you plan to do the rest of the work
+remotely, **OpenSSH Server** is offered there as a checkbox. Ticking it during the install
+is easier than adding it afterwards, when you would still need a monitor and keyboard
+attached to do it.
 
 ## BIOS settings afterwards
 
@@ -260,9 +260,9 @@ Then two settings in the BIOS:
 1. **Boot priority**: put `ubuntu` first, since this machine is primarily a server. Without
    it, a machine that powers itself back on after an outage sits waiting at Windows.
 2. **AC Power Loss = Power On**, so the machine starts by itself when power returns. This
-   matters for a machine other people reach over the network: if the power drops while
-   nobody is there and it does not come back up on its own, nobody can get in until someone
-   walks over and presses the button.
+   matters for any machine left unattended: if the power drops while nobody is there and it
+   does not come back up on its own, it stays off until someone walks over and presses the
+   button.
 
 ### You do not need to disable Secure Boot
 
@@ -291,7 +291,7 @@ there is no reason to turn it off.
 | target drive still BitLocker-encrypted | installer sees the drive but cannot use it | turn off Device Encryption and let decryption finish |
 | Fast Startup left on | Windows never really shuts down, partitions stay locked, filesystem corruption risk | turn it off before anything else |
 | creating a new EFI partition for Ubuntu | Windows may stop booting | reuse the ESP Windows already uses |
-| not installing OpenSSH during setup | you need a monitor and keyboard to continue | tick it on the software selection screen |
+| wanting remote access but not installing OpenSSH during setup | you need a monitor and keyboard to add it later | tick it on the software selection screen |
 | skipping boot priority / AC Power Loss | machine does not return after an outage, or returns into the wrong OS | set both in the BIOS while you are there |
 
 The main lesson: "the installer cannot see the free space" had two stacked causes, and

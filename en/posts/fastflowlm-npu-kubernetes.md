@@ -698,7 +698,7 @@ spec:
         - qwen2.5-it:3b
         - --host
         - 0.0.0.0
-        image: localhost:32000/fastflowlm:latest
+        image: <registry>/fastflowlm:latest
         name: fastflowlm
         ports:
         - containerPort: <port>

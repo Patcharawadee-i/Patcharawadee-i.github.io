@@ -44,8 +44,8 @@ tags: [kubernetes, microk8s, vllm, rocm, docker, amd-igpu, device-plugin]
 ที่สุด กฎนี้มาจากโพสต์ที่แล้วโดยตรง ตอนไล่หาสาเหตุที่ vLLM ช้า 10 เท่า ถ้าโฮสต์มี ROCm, virtualenv
 หรือไลบรารีที่เผลอ `pip install` ทิ้งไว้ คำถามว่า "เคอร์เนลตัวไหนถูกเรียก" จะกลายเป็นงานสืบสวน
 
-compose ทำข้อนี้ได้อยู่แล้ว แต่พอมีของหลายตัว การจัดการ dependency ระหว่างกัน การให้กลับมาเองหลัง
-ไฟดับ และการเปิดออกภายนอกแบบมี auth คั่น เริ่มกลายเป็นสคริปต์ที่เขียนเอง ซึ่งก็คือ "ของบนโฮสต์" อีกแบบ
+compose ทำข้อนี้ได้อยู่แล้ว แต่พอมีของหลายตัว การจัดการ dependency ระหว่างกัน และการให้กลับมาเอง
+หลังไฟดับ เริ่มกลายเป็นสคริปต์ที่เขียนเอง ซึ่งก็คือ "ของบนโฮสต์" อีกแบบ
 
 ## แปลง compose เป็น Deployment ทีละบรรทัด
 
@@ -335,7 +335,7 @@ docker.service        enabled
   แล้ว import เข้า containerd ของ MicroK8s ต้นฉบับจึงอยู่ใน image store ของ Docker ที่เดียว ถ้า
   containerd ล้าง image ทิ้งแล้ว pod ถูก schedule ใหม่ สิ่งที่กู้คืนได้คือ Docker เท่านั้น
 - **Docker คือเครื่องมือ build** image ที่ build เองบนเครื่องนี้ (อย่าง image ของ NPU ใน[โพสต์ถัดไป]({{ '/th/posts/fastflowlm-npu-kubernetes/' | relative_url }}))
-  ใช้ `docker build` แล้ว `docker push` เข้า registry ภายในของ MicroK8s
+  ต้องผ่าน `docker build` ก่อนจะไปถึงคลัสเตอร์
 
 > ⚠️ **"ทุกอย่างรันในกล่อง" ไม่ครอบคลุมเรื่องว่ากล่องมาจากไหน** Kubernetes รัน container ได้
 > แต่ **สร้าง** container ไม่ได้ และเอา image จากเครื่องตัวเองเข้า containerd ด้วยตัวมันเองไม่ได้

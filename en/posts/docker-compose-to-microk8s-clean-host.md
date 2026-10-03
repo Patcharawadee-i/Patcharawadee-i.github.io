@@ -47,9 +47,8 @@ the host carries as little as possible. The rule came straight out of the last p
 turned "which kernel did it just call?" into detective work.
 
 compose already gives you that. What it does not give you is what comes after: once several
-things are running, managing their dependencies, getting them back after a power cut, and
-exposing them with auth in front turns into hand-written scripts — just another kind of stuff
-living on the host.
+things are running, managing their dependencies and getting them back after a power cut
+turns into hand-written scripts — just another kind of stuff living on the host.
 
 ## Translating compose into a Deployment, line by line
 
@@ -347,7 +346,7 @@ era, but it is still load-bearing, for two reasons I had not thought about when 
   image store. If containerd ever evicts it and the pod is rescheduled, Docker is the only thing
   that can put it back.
 - **Docker is the build tool.** Images built on this machine (like the NPU ones in the [next post]({{ '/en/posts/fastflowlm-npu-kubernetes/' | relative_url }}))
-  go through `docker build` and `docker push` into MicroK8s's internal registry.
+  go through `docker build` before they ever reach the cluster.
 
 > ⚠️ **"Everything runs in a box" says nothing about where the boxes come from.** Kubernetes runs
 > containers; it does not *build* them, and it cannot get a local image into its containerd on
