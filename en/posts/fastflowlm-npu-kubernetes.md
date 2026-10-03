@@ -2,6 +2,7 @@
 layout: post
 lang: en
 slug: fastflowlm-npu-kubernetes
+series: infra
 title: "Running FastFlowLM on the NPU under Kubernetes: the ulimit that does not exist, and the device plugin I had to write"
 date: 2026-09-11 16:00:00 +0700
 description: "Putting the Strix Point NPU (XDNA2) to work inside MicroK8s. Two gaps Kubernetes does not fill at all — a per-pod ulimit and an NPU device plugin — both of which had to be built from scratch."

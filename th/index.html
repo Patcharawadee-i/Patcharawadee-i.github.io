@@ -12,6 +12,7 @@ description: "บันทึกการสร้าง self-hosted AI station 
     เขียนไว้ให้คนที่เจอปัญหาเดียวกันแล้วหาข้อมูลไม่เจอ — มีทางตันและสมมติฐานที่ผิดรวมอยู่ด้วย
     เพราะนั่นคือส่วนที่หาอ่านที่อื่นไม่ได้
   </p>
+  <p class="home__nav"><a href="{{ '/th/series/' | relative_url }}">ดูตามซีรีส์ →</a></p>
 
   {%- assign posts = site.pages | where: "lang", "th" | where_exp: "p", "p.slug" | sort: "date" | reverse -%}
   <ul class="post-list">

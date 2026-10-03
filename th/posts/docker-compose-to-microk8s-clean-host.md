@@ -2,6 +2,7 @@
 layout: post
 lang: th
 slug: docker-compose-to-microk8s-clean-host
+series: infra
 title: "ย้าย vLLM จาก docker-compose ไป MicroK8s: GPU หายไปไหน และทำไมห้ามตั้งชื่อ Service ว่า vllm"
 date: 2026-09-11 10:00:00 +0700
 description: "ย้าย vLLM จาก docker-compose ไป MicroK8s แล้วเจอสองเรื่องที่ compose ไม่เคยมี: hostPath ที่ mount /dev/kfd ให้แต่ไม่ให้สิทธิ์ cgroup และชื่อ Service ที่ไปชนกับตัวแปรภายในของ vLLM เอง"

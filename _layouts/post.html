@@ -1,11 +1,30 @@
 ---
 layout: default
 ---
+{%- comment -%}
+ซีรีส์: เลขตอนคือลำดับตามวันที่ของโพสต์ภาษาเดียวกันที่มี `series` ตรงกัน
+{%- endcomment -%}
+{%- if page.series -%}
+  {%- assign series_posts = site.pages | where: "lang", page.lang | where: "series", page.series | sort: "date" -%}
+  {%- for p in series_posts -%}
+    {%- if p.url == page.url -%}{%- assign series_idx = forloop.index0 -%}{%- endif -%}
+  {%- endfor -%}
+  {%- assign series_part = series_idx | plus: 1 -%}
+  {%- assign series_prev_idx = series_idx | minus: 1 -%}
+  {%- assign series_name = site.data.series[page.series][page.lang] | default: site.data.series[page.series].en | default: page.series -%}
+  {%- assign series_url = '/' | append: page.lang | append: '/series/#' | append: page.series | relative_url -%}
+{%- endif -%}
 <article class="post wrap">
   <header class="post__header">
     <p class="post__meta">
       <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
     </p>
+    {%- if page.series %}
+    <p class="post__series">
+      {% if page.lang == 'th' %}ตอนที่ {{ series_part }} ของซีรีส์{% else %}Part {{ series_part }} of{% endif %}
+      <a href="{{ series_url }}">{{ series_name }}</a>
+    </p>
+    {%- endif %}
     <h1 class="post__title">{{ page.title }}</h1>
     {% if page.description %}<p class="post__lede">{{ page.description }}</p>{% endif %}
   </header>
@@ -18,6 +37,19 @@ layout: default
 
     <div class="content" id="content">
       {{ content }}
+
+      {%- if page.series and series_posts.size > 1 %}
+      <nav class="series-nav" aria-label="{{ series_name }}">
+        {%- if series_idx > 0 -%}
+          {%- assign series_prev = series_posts[series_prev_idx] %}
+        <a class="series-nav__prev" href="{{ series_prev.url | relative_url }}">← {{ series_prev.title }}</a>
+        {%- endif -%}
+        {%- if series_part < series_posts.size -%}
+          {%- assign series_next = series_posts[series_part] %}
+        <a class="series-nav__next" href="{{ series_next.url | relative_url }}">{{ series_next.title }} →</a>
+        {%- endif %}
+      </nav>
+      {%- endif %}
     </div>
   </div>
 </article>

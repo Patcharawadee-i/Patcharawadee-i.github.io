@@ -2,6 +2,7 @@
 layout: post
 lang: en
 slug: ubuntu-server-dual-boot-windows-11-unallocated-space
+series: infra
 title: "Dual booting Ubuntu Server with Windows 11 on a mini PC: why the installer cannot see your free space"
 date: 2026-09-09 14:00:00 +0700
 description: "Windows Disk Management showed the space I had freed for Ubuntu. The Ubuntu Server installer did not. Two things had to be true at once before it would."

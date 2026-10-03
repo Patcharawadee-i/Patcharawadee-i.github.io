@@ -2,6 +2,7 @@
 layout: post
 lang: th
 slug: ubuntu-server-dual-boot-windows-11-unallocated-space
+series: infra
 title: "ลง Ubuntu Server คู่กับ Windows 11 บน mini PC: ทำไมตัวติดตั้งถึงมองไม่เห็นพื้นที่ว่าง"
 date: 2026-09-09 14:00:00 +0700
 description: "แบ่งพื้นที่ไว้ให้ Ubuntu แล้ว Windows เห็นชัดเจน แต่ตัวติดตั้ง Ubuntu Server ไม่เห็น ต้องทำสองอย่างพร้อมกันถึงจะผ่าน"

@@ -259,6 +259,30 @@ a:hover { color: var(--purple); }
 
 .content hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 
+/* ---------- ซีรีส์ ---------- */
+
+.home__nav { margin: -1.5rem 0 2.5rem; font-size: .95rem; }
+
+.post__series { font-size: .9rem; color: var(--fg-muted); margin: 0 0 .6rem; }
+
+.series-nav {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;
+  margin-top: 3rem; padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  font-size: .92rem; line-height: 1.5;
+}
+.series-nav a { flex: 1 1 14rem; }
+.series-nav__next { margin-left: auto; text-align: right; }
+
+.series + .series { margin-top: 2.5rem; }
+.series__title { font-size: 1.35rem; line-height: 1.35; margin: 0 0 .75rem; }
+.series__list { margin: 0; padding-left: 1.6rem; max-width: var(--measure); }
+.series__list li + li { margin-top: .5rem; }
+.series__date {
+  display: block;
+  font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--fg-muted);
+}
+
 /* ---------- footer ---------- */
 
 .site-footer {

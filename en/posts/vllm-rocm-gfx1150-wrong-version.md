@@ -2,6 +2,7 @@
 layout: post
 lang: en
 slug: vllm-rocm-gfx1150-wrong-version
+series: infra
 title: "vLLM on a Radeon 890M was 10x slower because of the wrong ROCm version"
 date: 2026-09-09 20:00:00 +0700
 description: "Running vLLM on a Strix Point iGPU (gfx1150) gave me 1.17 tok/s. The bottleneck turned out not to be the hardware, but an HSA_OVERRIDE_GFX_VERSION that should never have been there."

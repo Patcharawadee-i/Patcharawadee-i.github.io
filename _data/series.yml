@@ -1,0 +1,9 @@
+# ซีรีส์ที่รู้จัก — key คือค่าที่ใส่ใน front matter `series:` ของโพสต์
+# ลำดับในไฟล์นี้คือลำดับที่แสดงในหน้ารวมซีรีส์ ซีรีส์ที่ยังไม่มีโพสต์จะไม่ถูกแสดง
+# ใส่ `th:` เพิ่มได้ถ้าต้องการชื่อภาษาไทย ถ้าไม่มีจะใช้ `en:` ทั้งสองภาษา
+infra:
+  en: "Building an AI Station"
+models:
+  en: "Local Models on 60 GB Shared RAM"
+agents:
+  en: "Working with AI Agents"

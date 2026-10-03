@@ -2,6 +2,7 @@
 layout: post
 lang: th
 slug: fastflowlm-npu-kubernetes
+series: infra
 title: "รัน FastFlowLM บน NPU ใน Kubernetes: ulimit ที่ไม่มีอยู่จริง กับ device plugin ที่ต้องเขียนเอง"
 date: 2026-09-11 16:00:00 +0700
 description: "เอา NPU ของ Strix Point (XDNA2) มารันโมเดลใน MicroK8s เจอสองช่องว่างที่ Kubernetes ไม่มีให้เลย คือ ulimit ต่อ pod และ device plugin ของ NPU ต้องสร้างเองทั้งคู่"

@@ -2,6 +2,7 @@
 layout: post
 lang: en
 slug: docker-compose-to-microk8s-clean-host
+series: infra
 title: "Moving vLLM from docker-compose to MicroK8s: where the GPU went, and why you must not name the Service vllm"
 date: 2026-09-11 10:00:00 +0700
 description: "Two things bite you moving vLLM from docker-compose to MicroK8s: a hostPath that mounts /dev/kfd without granting cgroup access, and a Service name that collides with one of vLLM's own internal environment variables."

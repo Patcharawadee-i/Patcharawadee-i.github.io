@@ -1,0 +1,24 @@
+{%- comment -%}
+หน้ารวมซีรีส์: จัดกลุ่มโพสต์ของภาษาปัจจุบันตาม front matter `series`
+เรียงตามวันที่ (เก่าไปใหม่) ลำดับนี้คือเลข "ตอนที่ N" ในหน้าโพสต์ด้วย
+ซีรีส์ที่ยังไม่มีโพสต์จะไม่ถูกแสดง
+{%- endcomment -%}
+
+{%- assign posts = site.pages | where: "lang", page.lang | where_exp: "p", "p.slug" -%}
+{%- for entry in site.data.series -%}
+  {%- assign key = entry[0] -%}
+  {%- assign items = posts | where: "series", key | sort: "date" -%}
+  {%- if items.size > 0 -%}
+  <section class="series" id="{{ key }}">
+    <h2 class="series__title">{{ entry[1][page.lang] | default: entry[1].en }}</h2>
+    <ol class="series__list">
+      {%- for post in items -%}
+      <li>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <span class="series__date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      </li>
+      {%- endfor -%}
+    </ol>
+  </section>
+  {%- endif -%}
+{%- endfor -%}

@@ -13,6 +13,7 @@ description: "Notes from building a self-hosted AI station on an AMD mini PC —
     The dead ends and wrong assumptions are included on purpose — that is the part you cannot find
     anywhere else.
   </p>
+  <p class="home__nav"><a href="{{ '/en/series/' | relative_url }}">Browse by series →</a></p>
 
   {%- assign posts = site.pages | where: "lang", "en" | where_exp: "p", "p.slug" | sort: "date" | reverse -%}
   <ul class="post-list">
