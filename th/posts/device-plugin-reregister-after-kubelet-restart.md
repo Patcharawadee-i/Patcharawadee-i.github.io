@@ -214,7 +214,7 @@ microk8s kubectl get node <node> -o jsonpath='{.status.allocatable}'; echo
 {"amd.com/gpu":"1","cpu":"24", ... "fastflowlm.local/npu":"1", ... "pods":"110"}
 ```
 
-(output จริงอยู่บรรทัดเดียว ตัด key ที่ไม่เกี่ยวออก)
+output จริงอยู่บรรทัดเดียว key ที่ไม่เกี่ยวข้องถูกตัดออก และ `...` คือจุดที่ตัด
 
 ### ขั้น B: restart kubelet
 
@@ -280,7 +280,8 @@ microk8s kubectl rollout status -n <namespace> deploy/fastflowlm --timeout=600s
 deployment "fastflowlm" successfully rolled out
 ```
 
-(ตัดบรรทัด "Waiting for deployment ..." ก่อนหน้าออก)
+ข้างบนแสดงเฉพาะบรรทัดสุดท้ายของ output ส่วนบรรทัด "Waiting for deployment ..." ก่อนหน้านั้นตัดออก
+จากนั้นดู pod
 
 ```bash
 microk8s kubectl get pods -n <namespace> | grep fastflowlm
@@ -301,7 +302,7 @@ microk8s kubectl run curltest -n <namespace> --rm -i --restart=Never --image=cur
 "usage":{"prompt_tokens":10,"completion_tokens":10,"total_tokens":20, ... "decoding_speed_tps":5.422593561429308}
 ```
 
-(ตัดเหลือเฉพาะ field ที่เกี่ยว) decode ได้ประมาณ 5.4 tokens ต่อวินาที
+response ข้างบนตัดเหลือเฉพาะ field ที่เกี่ยวข้อง decode ได้ประมาณ 5.4 tokens ต่อวินาที
 
 ขั้นนี้ไม่ได้จดไว้ว่าเริ่มหลัง restart kubelet นานเท่าไร ซึ่งจำกัดสิ่งที่พิสูจน์ได้ ใน 5 นาทีแรก kubelet
 ยังจำ plugin ที่ยังไม่ได้ลงทะเบียนใหม่ได้ pod ที่เริ่มในช่วงนั้นจึงอาจสำเร็จได้แม้ไม่มี fix ขั้นนี้

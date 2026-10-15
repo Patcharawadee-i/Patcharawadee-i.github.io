@@ -227,7 +227,8 @@ microk8s kubectl get node <node> -o jsonpath='{.status.allocatable}'; echo
 {"amd.com/gpu":"1","cpu":"24", ... "fastflowlm.local/npu":"1", ... "pods":"110"}
 ```
 
-(One line of output; the keys that are not relevant here are cut.)
+The real output is a single line. The keys that do not matter here are cut, and the `...`
+marks where.
 
 ### Step B: restart kubelet
 
@@ -298,7 +299,8 @@ microk8s kubectl rollout status -n <namespace> deploy/fastflowlm --timeout=600s
 deployment "fastflowlm" successfully rolled out
 ```
 
-(Earlier "Waiting for deployment ..." lines trimmed.)
+Only the last line of the rollout output is shown here. The "Waiting for deployment ..." lines
+before it are trimmed. Then the pod:
 
 ```bash
 microk8s kubectl get pods -n <namespace> | grep fastflowlm
@@ -319,7 +321,8 @@ microk8s kubectl run curltest -n <namespace> --rm -i --restart=Never --image=cur
 "usage":{"prompt_tokens":10,"completion_tokens":10,"total_tokens":20, ... "decoding_speed_tps":5.422593561429308}
 ```
 
-(Trimmed to the relevant fields.) Decoding ran at about 5.4 tokens per second.
+The response is trimmed to the fields that matter here. Decoding ran at about 5.4 tokens per
+second.
 
 I did not record how long after the kubelet restart I started this step. That limits what it
 proves. Within the first 5 minutes kubelet still remembers a plugin that has not registered
