@@ -446,6 +446,12 @@ func (p *npuDevicePlugin) Allocate(ctx context.Context, r *pluginapi.AllocateReq
 > [โพสต์ถัดมา]({{ '/th/posts/agent-reported-a-run-that-never-happened/' | relative_url }})
 {: .warn}
 
+> ⚠️ **เพิ่มเมื่อ 2026-10-15: แก้แล้ว** ตอนนี้ plugin เช็ก socket ของตัวเองทุก 5 วินาทีและลงทะเบียนใหม่
+> เมื่อ socket หาย พร้อมอัปเดต library และ base image โค้ดในโพสต์นี้คงไว้ตามที่รันจริง สิ่งที่เปลี่ยนและ
+> ผลทดสอบด้วย kubelet restart จริงอยู่ใน
+> [โพสต์ใหม่]({{ '/th/posts/device-plugin-reregister-after-kubelet-restart/' | relative_url }})
+{: .warn}
+
 <details markdown="1">
 <summary>โค้ด Go ฉบับเต็ม (~140 บรรทัด)</summary>
 

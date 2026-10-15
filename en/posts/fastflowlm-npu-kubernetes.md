@@ -460,6 +460,12 @@ wall to open one door.
 > are in [a later post]({{ '/en/posts/agent-reported-a-run-that-never-happened/' | relative_url }}).
 {: .warn}
 
+> ⚠️ **Added 2026-10-15: fixed.** The plugin now checks its own socket every 5 seconds and
+> registers again when it is gone, and the libraries and base images are updated. The code in
+> this post is left exactly as it ran. What changed, and the test with a real kubelet restart,
+> are in [a newer post]({{ '/en/posts/device-plugin-reregister-after-kubelet-restart/' | relative_url }}).
+{: .warn}
+
 <details markdown="1">
 <summary>The full Go code (~140 lines)</summary>
 

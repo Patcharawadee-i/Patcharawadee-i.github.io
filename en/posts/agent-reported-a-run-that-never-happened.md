@@ -163,6 +163,12 @@ that pod had to start again.
 > it registers again on startup.
 {: .warn}
 
+> **Added 2026-10-15:** Watching `kubelet.sock` was the first idea at the time of writing.
+> After checking more sources I chose a different option: the plugin checks its own socket on
+> a timer and registers again. The comparison and the test are in
+> [a newer post]({{ '/en/posts/device-plugin-reregister-after-kubelet-restart/' | relative_url }}).
+{: .warn}
+
 ## Hermes said the tool does not exist
 
 With the skill loaded, the next run failed in a new way. The model called one of the MCP
